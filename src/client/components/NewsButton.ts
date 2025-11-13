@@ -37,6 +37,10 @@ export class NewsButton extends LitElement {
     this.openNewsModel();
   }
 
+  public refreshNews() {
+    this.isActive = true;
+  }
+
   private openNewsModel() {
     const newsModal = document.querySelector("news-modal") as NewsModal;
     if (newsModal) {

@@ -20,7 +20,7 @@
     "none": "None"
   },
   "main": {
-    "title": "OpenFront (ALPHA)",
+    "title": "BackWars - Alpha",
     "join_discord": "Join the Discord!",
     "login_discord": "Login with Discord",
     "checking_login": "Checking login...",
@@ -222,12 +222,15 @@
   },
   "public_lobby": {
     "join": "Join next Game",
+    "event_false": " - No Event",
+    "event_true": " - Special Event",
     "waiting": "players waiting",
     "teams_Duos": "Duos (teams of 2)",
     "teams_Trios": "Trios (teams of 3)",
     "teams_Quads": "Quads (teams of 4)",
     "teams_hvn": "Humans Vs Nations",
-    "teams": "{num} teams"
+    "teams": "{num} teams",
+    "teams_Humans": "Humans"
   },
   "matchmaking_modal": {
     "title": "Matchmaking",
@@ -278,9 +281,11 @@
     "bot": "Bot"
   },
   "game_starting_modal": {
-    "title": "Game is Starting...",
-    "credits": "Credits",
-    "code_license": "Code licensed under AGPL-3.0 (no warranty)"
+    "title": "BackWars",
+    "info_1": "Game is Starting...",
+    "info_2": "MainServer",
+    "credits_title": "Credits",
+    "credits": "Created by CHTriple & FreshFlash"
   },
   "difficulty": {
     "difficulty": "Difficulty",
@@ -306,7 +311,8 @@
     "atom_bomb": "Atom Bomb",
     "hydrogen_bomb": "Hydrogen Bomb",
     "mirv": "MIRV",
-    "factory": "Factory"
+    "factory": "Factory",
+    "farmland": "Farmland"
   },
   "user_setting": {
     "title": "User Settings",

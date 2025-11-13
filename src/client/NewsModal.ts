@@ -1,7 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { resolveMarkdown } from "lit-markdown";
 import { customElement, property, query } from "lit/decorators.js";
-import changelog from "../../resources/changelog.md";
 import { translateText } from "../client/Utils";
 import "./components/baseComponents/Button";
 import "./components/baseComponents/Modal";
@@ -30,8 +29,12 @@ export class NewsModal extends LitElement {
     }
   };
 
-  @property({ type: String }) markdown = "Loading...";
+  private manualChangelog: string = `
+# 📰 Update v0.1
+Modded by **CHTriple** & **FreshFlash**
+`;
 
+  @property({ type: String }) markdown = this.manualChangelog;
   private initialized: boolean = false;
 
   static styles = css`
@@ -64,6 +67,29 @@ export class NewsModal extends LitElement {
     .news-content a:hover {
       color: #6fb3ff !important;
     }
+    button {
+      display: block;
+      margin: 1.5rem auto 0 auto;
+      width: 160px;
+      padding: 0.6rem 1rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      background-color: #4a9eff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #6fb3ff;
+    }
+
+    button:active {
+      background-color: #3a8de0;
+    }
   `;
 
   render() {
@@ -81,44 +107,14 @@ export class NewsModal extends LitElement {
             </div>
           </div>
         </div>
-
-        <div>
-          ${translateText("news.see_all_releases")}
-          <a
-            href="https://github.com/openfrontio/OpenFrontIO/releases"
-            target="_blank"
-            >${translateText("news.github_link")}</a
-          >.
-        </div>
-
-        <o-button
-          title=${translateText("common.close")}
-          @click=${this.close}
-          blockDesktop
-        ></o-button>
-      </o-modal>
+      </modal>
     `;
   }
 
   public open() {
     if (!this.initialized) {
       this.initialized = true;
-      fetch(changelog)
-        .then((response) => (response.ok ? response.text() : "Failed to load"))
-        .then((markdown) =>
-          markdown
-            .replace(
-              /(?<!\()\bhttps:\/\/github\.com\/openfrontio\/OpenFrontIO\/pull\/(\d+)\b/g,
-              (_match, prNumber) =>
-                `[#${prNumber}](https://github.com/openfrontio/OpenFrontIO/pull/${prNumber})`,
-            )
-            .replace(
-              /(?<!\()\bhttps:\/\/github\.com\/openfrontio\/OpenFrontIO\/compare\/([\w.-]+)\b/g,
-              (_match, comparison) =>
-                `[${comparison}](https://github.com/openfrontio/OpenFrontIO/compare/${comparison})`,
-            ),
-        )
-        .then((markdown) => (this.markdown = markdown));
+      this.markdown = this.manualChangelog;
     }
     this.requestUpdate();
     this.modalEl?.open();

@@ -1,0 +1,16 @@
+Server.ts => IP config - (src/server/Server.ts)
+Client.ts => Client Managing (basic) - (src/client/Client.ts)
+Version Title => The first lines in the index.html - (resources/version.txt)
+Languages => (resources/lang/...)
+NewsModal.ts => Release Notes - (src/client/NewsModal.ts)
+GameStartingModal.ts => Loading Screen when entering a round - (src/client/GameStartingModal.ts)
+
+
+
+// Port
+webpack.config.js
+
+
+In Defaultconfig.ts (src/core/configuration/DefaultConfig.ts) alle Zahlen für einnahmen usw.
+
+PublicLobby.ts => Special Events - (src/client/PublicLobby.ts)

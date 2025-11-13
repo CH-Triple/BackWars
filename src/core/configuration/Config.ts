@@ -151,6 +151,12 @@ export interface Config {
   railroadMaxSize(): number;
   safeFromPiratesCooldownMax(): number;
   defensePostRange(): number;
+  farmlandRange(): number;
+  farmlandGoldAmount(): Gold;
+  farmlandGoldIntervalMin(): number;
+  farmlandGoldIntervalMax(): number;
+  farmlandDefenseBonus(): number;
+  farmlandSpeedBonus(): number;
   SAMCooldown(): number;
   SiloCooldown(): number;
   defensePostDefenseBonus(): number;

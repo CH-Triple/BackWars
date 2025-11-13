@@ -7,6 +7,7 @@ import { TransformHandler } from "../TransformHandler";
 import anchorIcon from "../../../../resources/images/AnchorIcon.png";
 import cityIcon from "../../../../resources/images/CityIcon.png";
 import factoryIcon from "../../../../resources/images/FactoryUnit.png";
+import farmlandIcon from "../../../../resources/images/FarmlandUnit.png";
 import missileSiloIcon from "../../../../resources/images/MissileSiloUnit.png";
 import SAMMissileIcon from "../../../../resources/images/SamLauncherUnit.png";
 import shieldIcon from "../../../../resources/images/ShieldIcon.png";
@@ -22,6 +23,7 @@ export const STRUCTURE_SHAPES: Partial<Record<UnitType, ShapeType>> = {
   [UnitType.AtomBomb]: "cross",
   [UnitType.HydrogenBomb]: "cross",
   [UnitType.MIRV]: "cross",
+  [UnitType.Farmland]: "circle",
 };
 export const LEVEL_SCALE_FACTOR = 3;
 export const ICON_SCALE_FACTOR_ZOOMED_IN = 3.5;
@@ -63,6 +65,7 @@ export class SpriteFactory {
     [UnitType.Port, { iconPath: anchorIcon, image: null }],
     [UnitType.MissileSilo, { iconPath: missileSiloIcon, image: null }],
     [UnitType.SAMLauncher, { iconPath: SAMMissileIcon, image: null }],
+    [UnitType.Farmland, { iconPath: farmlandIcon, image: null }],
   ]);
   constructor(
     theme: Theme,
@@ -443,6 +446,9 @@ export class SpriteFactory {
         break;
       case UnitType.DefensePost:
         radius = this.game.config().defensePostRange();
+        break;
+      case UnitType.Farmland:
+        radius = this.game.config().farmlandRange();
         break;
       case UnitType.AtomBomb:
         radius = this.game.config().nukeMagnitudes(UnitType.AtomBomb).outer;

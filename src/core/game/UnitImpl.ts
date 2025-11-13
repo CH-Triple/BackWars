@@ -75,6 +75,8 @@ export class UnitImpl implements Unit {
       case UnitType.DefensePost:
       case UnitType.SAMLauncher:
       case UnitType.City:
+      case UnitType.Factory:
+      case UnitType.Farmland:
         this.mg.stats().unitBuild(_owner, this._type);
     }
   }

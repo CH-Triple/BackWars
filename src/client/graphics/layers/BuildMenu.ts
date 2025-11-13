@@ -4,6 +4,7 @@ import warshipIcon from "../../../../resources/images/BattleshipIconWhite.svg";
 import cityIcon from "../../../../resources/images/CityIconWhite.svg";
 import factoryIcon from "../../../../resources/images/FactoryIconWhite.svg";
 import goldCoinIcon from "../../../../resources/images/GoldCoinIcon.svg";
+import farmlandIcon from "../../../../resources/images/FarmlandIconWhite.svg";
 import mirvIcon from "../../../../resources/images/MIRVIcon.svg";
 import missileSiloIcon from "../../../../resources/images/MissileSiloIconWhite.svg";
 import hydrogenBombIcon from "../../../../resources/images/MushroomCloudIconWhite.svg";
@@ -114,6 +115,13 @@ export const buildTable: BuildItemDisplay[][] = [
       icon: factoryIcon,
       description: "build_menu.desc.factory",
       key: "unit_type.factory",
+      countable: true,
+    },
+    {
+      unitType: UnitType.Farmland,
+      icon: farmlandIcon,
+      description: "build_menu.desc.farmland",
+      key: "unit_type.farmland",
       countable: true,
     },
   ],

@@ -151,7 +151,9 @@ export class PublicLobby extends LitElement {
         >
           <div>
             <div class="text-lg md:text-2xl font-semibold">
-              ${translateText("public_lobby.join")}
+              ${translateText("public_lobby.join")}${translateText(
+                "public_lobby.event_false",
+              )}
             </div>
             <div class="text-md font-medium text-blue-100">
               <span

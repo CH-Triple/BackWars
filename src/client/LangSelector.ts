@@ -7,7 +7,7 @@ import bg from "../../resources/lang/bg.json";
 import bn from "../../resources/lang/bn.json";
 import cs from "../../resources/lang/cs.json";
 import da from "../../resources/lang/da.json";
-import de from "../../resources/lang/de.json";
+//import de from "../../resources/lang/de.json";
 import en from "../../resources/lang/en.json";
 import eo from "../../resources/lang/eo.json";
 import es from "../../resources/lang/es.json";
@@ -47,12 +47,12 @@ export class LangSelector extends LitElement {
   private debugKeyPressed: boolean = false;
 
   private languageMap: Record<string, any> = {
-    ar,
+    /*ar,
     bg,
     bn,
-    de,
+    de,*/
     en,
-    es,
+    /*es,
     eo,
     fr,
     it,
@@ -78,7 +78,7 @@ export class LangSelector extends LitElement {
     mk,
     gl,
     sl,
-    sk,
+    sk,*/
   };
 
   createRenderRoot() {
