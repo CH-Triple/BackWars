@@ -591,6 +591,7 @@ export class DefaultConfig implements Config {
           constructionDuration: this.instantBuild() ? 0 : 2 * 10,
           upgradable: true,
           maxHealth: 500,
+          canBuildTrainStation: true,
         };
       default:
         assertNever(type);

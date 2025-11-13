@@ -61,6 +61,17 @@ class FactoryStopHandler implements TrainStopHandler {
   ): void {}
 }
 
+class FarmlandStopHandler implements TrainStopHandler {
+  onStop(
+    mg: Game,
+    station: TrainStation,
+    trainExecution: TrainExecution,
+  ): void {
+    // Give 50% boost to farmland gold generation
+    // This is handled by checking if farmland has train station in FarmlandExecution
+  }
+}
+
 export function createTrainStopHandlers(
   random: PseudoRandom,
 ): Partial<Record<UnitType, TrainStopHandler>> {
@@ -68,6 +79,7 @@ export function createTrainStopHandlers(
     [UnitType.City]: new CityStopHandler(),
     [UnitType.Port]: new PortStopHandler(random),
     [UnitType.Factory]: new FactoryStopHandler(),
+    [UnitType.Farmland]: new FarmlandStopHandler(),
   };
 }
 

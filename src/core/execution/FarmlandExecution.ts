@@ -1,5 +1,6 @@
 import { Execution, Game, Gold, Player, Unit, UnitType } from "../game/Game";
 import { TileRef } from "../game/GameMap";
+import { TrainStationExecution } from "./TrainStationExecution";
 
 export class FarmlandExecution implements Execution {
   private farmland: Unit | null = null;
@@ -36,6 +37,7 @@ export class FarmlandExecution implements Execution {
         return;
       }
       this.farmland = this.player.buildUnit(UnitType.Farmland, spawnTile, {});
+      this.createStation();
       // Set initial interval when farmland is built
       this.setNextGoldInterval();
       this.lastGoldGeneration = ticks;
@@ -53,12 +55,35 @@ export class FarmlandExecution implements Execution {
     if (!this.game) return;
     const ticksSinceLastGold = ticks - this.lastGoldGeneration;
     if (ticksSinceLastGold >= this.ticksUntilGold) {
-      const goldAmount = this.game.config().farmlandGoldAmount();
+      let goldAmount = this.game.config().farmlandGoldAmount();
+      
+      // 50% boost if connected to rails (has train station)
+      if (this.farmland.hasTrainStation()) {
+        goldAmount = (goldAmount * 150n) / 100n; // 50% boost = 1.5x
+      }
+      
       if (goldAmount > 0n) {
         this.player.addGold(goldAmount, this.farmland.tile());
       }
       this.lastGoldGeneration = ticks;
       this.setNextGoldInterval();
+    }
+  }
+
+  createStation(): void {
+    if (this.farmland !== null) {
+      const structures = this.game.nearbyUnits(
+        this.farmland.tile()!,
+        this.game.config().trainStationMaxRange(),
+        [UnitType.City, UnitType.Port, UnitType.Factory, UnitType.Farmland],
+      );
+
+      this.game.addExecution(new TrainStationExecution(this.farmland, false));
+      for (const { unit } of structures) {
+        if (!unit.hasTrainStation()) {
+          this.game.addExecution(new TrainStationExecution(unit));
+        }
+      }
     }
   }
 

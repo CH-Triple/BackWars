@@ -134,7 +134,7 @@ export class RailNetworkImpl implements RailNetwork {
     const neighbors = this.game.nearbyUnits(
       station.tile(),
       this.game.config().trainStationMaxRange(),
-      [UnitType.City, UnitType.Factory, UnitType.Port],
+      [UnitType.City, UnitType.Factory, UnitType.Port, UnitType.Farmland],
     );
 
     const editedClusters = new Set<Cluster>();

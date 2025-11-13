@@ -65,7 +65,7 @@ export class SpriteFactory {
     [UnitType.Port, { iconPath: anchorIcon, image: null }],
     [UnitType.MissileSilo, { iconPath: missileSiloIcon, image: null }],
     [UnitType.SAMLauncher, { iconPath: SAMMissileIcon, image: null }],
-    [UnitType.Farmland, { iconPath: farmlandIcon, image: null }],
+    [UnitType.Farmland, { iconPath: factoryIcon, image: null }],
   ]);
   constructor(
     theme: Theme,
