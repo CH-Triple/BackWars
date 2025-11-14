@@ -505,7 +505,8 @@
       "port": "Sends trade ships to generate gold",
       "defense_post": "Increases defenses of nearby borders",
       "city": "Increases max population",
-      "factory": "Creates railroads and spawns trains"
+      "factory": "Creates railroads and spawns trains",
+      "farmland": "Gives you 25k gold each 10 seconds"
     },
     "not_enough_money": "Not enough money"
   },
