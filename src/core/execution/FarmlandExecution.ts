@@ -79,18 +79,19 @@ export class FarmlandExecution implements Execution {
 
   createStation(): void {
     if (this.farmland !== null) {
-      const structures = this.game.nearbyUnits(
+      // Farmland soll sich nur über Factorys mit Rails verbinden
+      // Prüfe ob eine Factory in der Nähe ist
+      const nearbyFactories = this.game.nearbyUnits(
         this.farmland.tile()!,
         this.game.config().trainStationMaxRange(),
-        [UnitType.City, UnitType.Port, UnitType.Factory, UnitType.Farmland],
+        [UnitType.Factory],
       );
 
-      this.game.addExecution(new TrainStationExecution(this.farmland, false));
-      for (const { unit } of structures) {
-        if (!unit.hasTrainStation()) {
-          this.game.addExecution(new TrainStationExecution(unit));
-        }
+      // Nur Station erstellen wenn eine Factory in der Nähe ist
+      if (nearbyFactories.length > 0) {
+        this.game.addExecution(new TrainStationExecution(this.farmland, false));
       }
+      // Farmland erstellt keine Stationen für andere Strukturen
     }
   }
 

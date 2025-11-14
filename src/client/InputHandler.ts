@@ -398,6 +398,11 @@ export class InputHandler {
         this.setGhostStructure(UnitType.SAMLauncher);
       }
 
+      if (e.code === this.keybinds.buildFarmland) {
+        e.preventDefault();
+        this.setGhostStructure(UnitType.Farmland);
+      }
+
       if (e.code === this.keybinds.buildAtomBomb) {
         e.preventDefault();
         this.setGhostStructure(UnitType.AtomBomb);
@@ -416,11 +421,6 @@ export class InputHandler {
       if (e.code === this.keybinds.buildMIRV) {
         e.preventDefault();
         this.setGhostStructure(UnitType.MIRV);
-      }
-
-      if (e.code === this.keybinds.buildFarmland) {
-        e.preventDefault();
-        this.setGhostStructure(UnitType.Farmland);
       }
 
       // Shift-D to toggle performance overlay

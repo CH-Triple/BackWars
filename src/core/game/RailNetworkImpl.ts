@@ -135,10 +135,16 @@ export class RailNetworkImpl implements RailNetwork {
   }
 
   private connectToNearbyStations(station: TrainStation) {
+    // Farmland soll sich nur mit Factorys verbinden können
+    const stationUnitType = station.unit.type();
+    const allowedNeighborTypes = stationUnitType === UnitType.Farmland
+      ? [UnitType.Factory] // Farmland kann sich nur mit Factorys verbinden
+      : [UnitType.City, UnitType.Factory, UnitType.Port, UnitType.Farmland]; // Andere Strukturen können sich mit allen verbinden
+
     const neighbors = this.game.nearbyUnits(
       station.tile(),
       this.game.config().trainStationMaxRange(),
-      [UnitType.City, UnitType.Factory, UnitType.Port, UnitType.Farmland],
+      allowedNeighborTypes,
     );
 
     const editedClusters = new Set<Cluster>();
@@ -146,6 +152,12 @@ export class RailNetworkImpl implements RailNetwork {
 
     for (const neighbor of neighbors) {
       if (neighbor.unit === station.unit) continue;
+      
+      // Farmland-Stationen sollen sich nur mit Factorys verbinden
+      if (stationUnitType === UnitType.Farmland && neighbor.unit.type() !== UnitType.Factory) {
+        continue;
+      }
+      
       const neighborStation = this.stationManager.findStation(neighbor.unit);
       if (!neighborStation) continue;
 
