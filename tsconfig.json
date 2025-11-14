@@ -12,6 +12,9 @@
     // Emit
     "sourceMap": true,
 
+    // Allow MODDING
+    "allowJs": true,
+
     // Type Checking
     "allowSyntheticDefaultImports": true,
     "allowUnusedLabels": false,
@@ -24,6 +27,7 @@
     "strictPropertyInitialization": false
   },
   "include": [
+    "src",
     "src/**/*",
     "resources/**/*",
     "proprietary/**/*",
