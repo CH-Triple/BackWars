@@ -510,8 +510,8 @@
     "not_enough_money": "Not enough money"
   },
   "win_modal": {
-    "support_openfront": "Support OpenFront!",
-    "territory_pattern": "Purchase a territory skin to go ad-free!",
+    "support_backwars": "Support BackWars!",
+    "vip_info": "Purchase VIP Rank to get a special name color!",
     "died": "You died",
     "your_team": "Your team won!",
     "other_team": "{team} team has won!",
@@ -521,7 +521,7 @@
     "keep": "Keep Playing",
     "spectate": "Spectate",
     "wishlist": "Wishlist on Steam!",
-    "ofm_winter": "OpenFront Masters Winter Tournament!",
+    "ofm_winter": "BackWars Masters Winter Tournament!",
     "ofm_winter_description": "Join the competitive tournament and compete against the best players",
     "join_tournament": "Join Tournament",
     "join_discord": "Join Our Discord Community!",
