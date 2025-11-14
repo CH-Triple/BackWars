@@ -185,7 +185,7 @@ export class UnitDisplay extends LitElement implements Layer {
               this._farmland,
               UnitType.Farmland,
               "farmland",
-              this.keybinds["buildFarmland"]?.key ?? "",
+              this.keybinds["buildFarmland"]?.key ?? "F",
             )}
           </div>
         </div>
