@@ -101,6 +101,10 @@ export class RailNetworkImpl implements RailNetwork {
     this.connectToNearbyStations(station);
   }
 
+  findStation(unit: Unit): TrainStation | null {
+    return this.stationManager.findStation(unit);
+  }
+
   removeStation(unit: Unit): void {
     const station = this.stationManager.findStation(unit);
     if (!station) return;

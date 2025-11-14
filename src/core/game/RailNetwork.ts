@@ -5,4 +5,5 @@ export interface RailNetwork {
   connectStation(station: TrainStation): void;
   removeStation(unit: Unit): void;
   findStationsPath(from: TrainStation, to: TrainStation): TrainStation[];
+  findStation(unit: Unit): TrainStation | null;
 }

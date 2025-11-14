@@ -57,9 +57,16 @@ export class FarmlandExecution implements Execution {
     if (ticksSinceLastGold >= this.ticksUntilGold) {
       let goldAmount = this.game.config().farmlandGoldAmount();
       
+      // Multiply by level (1 level = 1 farm)
+      const level = this.farmland.level();
+      goldAmount = goldAmount * BigInt(level);
+      
       // 50% boost if connected to rails (has train station)
-      if (this.farmland.hasTrainStation()) {
-        goldAmount = (goldAmount * 150n) / 100n; // 50% boost = 1.5x
+      // Use rail network to check for station, which is more robust for stacked buildings
+      const hasStation = this.farmland.hasTrainStation() || 
+                         this.game.railNetwork().findStation(this.farmland) !== null;
+      if (hasStation) {
+        goldAmount = (goldAmount * 15n) / 10n;// 50% boost = 1.5x
       }
       
       if (goldAmount > 0n) {
