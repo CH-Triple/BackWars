@@ -2,7 +2,8 @@ services:
   - type: web
     name: backwars-server
     env: node
-    buildCommand: npm install && npm run build
+    # Install all dependencies including devDependencies for build
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: npm start
     envVars:
       - key: GAME_ENV

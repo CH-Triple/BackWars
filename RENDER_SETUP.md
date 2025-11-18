@@ -24,9 +24,11 @@ Diese Anleitung erklärt, wie du den BackWars Server auf Render hostest.
 4. Konfiguriere:
    - **Name**: `backwars-server` (oder ein anderer Name)
    - **Environment**: `Node`
-   - **Build Command**: `npm install && npm run build`
+   - **Build Command**: `npm ci --include=dev && npm run build`
    - **Start Command**: `npm start`
    - **Plan**: Wähle einen Plan (Free Tier funktioniert für Tests)
+   
+   **WICHTIG**: Verwende `npm ci --include=dev` statt `npm install`, damit devDependencies (wie webpack-cli) installiert werden!
 
 ## Umgebungsvariablen
 
@@ -50,7 +52,31 @@ Setze folgende Umgebungsvariablen in der Render Dashboard:
 3. **Build**: Der Build-Prozess erstellt die statischen Dateien im `static/` Ordner
 4. **Worker-Prozesse**: Die Worker-Prozesse laufen intern auf localhost und kommunizieren mit dem Master-Prozess
 
+## Wichtige Hinweise für manuelle Konfiguration
+
+Falls du die Konfiguration manuell im Render Dashboard eingegeben hast (nicht über render.yaml):
+
+**Build Command muss sein:**
+```bash
+npm ci --include=dev && npm run build
+```
+
+**NICHT verwenden:**
+- ❌ `npm run build-dev` (das ist für Development)
+- ❌ `npm install && npm run build` (installiert möglicherweise keine devDependencies wenn NODE_ENV=production)
+
+**Warum `--include=dev`?**
+- Render setzt standardmäßig `NODE_ENV=production`
+- In Production installiert npm standardmäßig keine devDependencies
+- `webpack-cli` ist eine devDependency und wird für den Build benötigt
+- `--include=dev` stellt sicher, dass devDependencies installiert werden
+
 ## Troubleshooting
+
+### Build-Fehler: "webpack-cli must be installed"
+- Stelle sicher, dass der Build-Befehl `npm ci --include=dev && npm run build` ist
+- Prüfe, ob `NODE_ENV` während des Builds auf `production` gesetzt ist (sollte OK sein mit `--include=dev`)
+- Stelle sicher, dass `package-lock.json` committed ist
 
 ### Server startet nicht
 - Prüfe die Logs im Render Dashboard
