@@ -213,6 +213,7 @@ export class InputHandler {
       buildHydrogenBomb: "Digit9",
       buildMIRV: "Digit0",
       buildFarmland: "KeyF",
+      buildBunker: "KeyB",
       ...saved,
     };
 
@@ -401,6 +402,11 @@ export class InputHandler {
       if (e.code === this.keybinds.buildFarmland) {
         e.preventDefault();
         this.setGhostStructure(UnitType.Farmland);
+      }
+
+      if (e.code === this.keybinds.buildBunker) {
+        e.preventDefault();
+        this.setGhostStructure(UnitType.Bunker);
       }
 
       if (e.code === this.keybinds.buildAtomBomb) {

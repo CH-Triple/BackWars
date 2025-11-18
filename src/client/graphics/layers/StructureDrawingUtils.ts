@@ -8,6 +8,7 @@ import anchorIcon from "../../../../resources/images/AnchorIcon.png";
 import cityIcon from "../../../../resources/images/CityIcon.png";
 import factoryIcon from "../../../../resources/images/FactoryUnit.png";
 import farmlandIcon from "../../../../resources/images/FarmlandUnit.png";
+import bunkerIcon from "../../../../resources/images/BunkerUnit.png";
 import missileSiloIcon from "../../../../resources/images/MissileSiloUnit.png";
 import SAMMissileIcon from "../../../../resources/images/SamLauncherUnit.png";
 import shieldIcon from "../../../../resources/images/ShieldIcon.png";
@@ -24,6 +25,7 @@ export const STRUCTURE_SHAPES: Partial<Record<UnitType, ShapeType>> = {
   [UnitType.HydrogenBomb]: "cross",
   [UnitType.MIRV]: "cross",
   [UnitType.Farmland]: "circle",
+  [UnitType.Bunker]: "octagon",
 };
 export const LEVEL_SCALE_FACTOR = 3;
 export const ICON_SCALE_FACTOR_ZOOMED_IN = 3.5;
@@ -66,6 +68,7 @@ export class SpriteFactory {
     [UnitType.MissileSilo, { iconPath: missileSiloIcon, image: null }],
     [UnitType.SAMLauncher, { iconPath: SAMMissileIcon, image: null }],
     [UnitType.Farmland, { iconPath: factoryIcon, image: null }],
+    [UnitType.Bunker, { iconPath: bunkerIcon, image: null }],
   ]);
   constructor(
     theme: Theme,

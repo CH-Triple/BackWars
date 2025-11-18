@@ -11,6 +11,7 @@ import portIcon from "../../../../resources/images/PortIcon.svg";
 import samLauncherIcon from "../../../../resources/images/SamLauncherIconWhite.svg";
 import defensePostIcon from "../../../../resources/images/ShieldIconWhite.svg";
 import farmlandIcon from "../../../../resources/images/FarmlandIconWhite.svg";
+import bunkerIcon from "../../../../resources/images/BunkerIconWhite.svg";
 import { EventBus } from "../../../core/EventBus";
 import { Gold, PlayerActions, UnitType } from "../../../core/game/Game";
 import { GameView } from "../../../core/game/GameView";
@@ -37,6 +38,7 @@ export class UnitDisplay extends LitElement implements Layer {
   private _defensePost = 0;
   private _samLauncher = 0;
   private _farmland = 0;
+  private _bunker = 0;
   private allDisabled = false;
   private _hoveredUnit: UnitType | null = null;
 
@@ -64,6 +66,7 @@ export class UnitDisplay extends LitElement implements Layer {
       config.isUnitDisabled(UnitType.MissileSilo) &&
       config.isUnitDisabled(UnitType.SAMLauncher) &&
       config.isUnitDisabled(UnitType.Farmland) &&
+      config.isUnitDisabled(UnitType.Bunker) &&
       config.isUnitDisabled(UnitType.Warship) &&
       config.isUnitDisabled(UnitType.AtomBomb) &&
       config.isUnitDisabled(UnitType.HydrogenBomb) &&
@@ -114,6 +117,7 @@ export class UnitDisplay extends LitElement implements Layer {
     this._samLauncher = player.totalUnitLevels(UnitType.SAMLauncher);
     this._factories = player.totalUnitLevels(UnitType.Factory);
     this._farmland = player.totalUnitLevels(UnitType.Farmland);
+    this._bunker = player.totalUnitLevels(UnitType.Bunker);
     this._warships = player.totalUnitLevels(UnitType.Warship);
     this.requestUpdate();
   }
@@ -186,6 +190,13 @@ export class UnitDisplay extends LitElement implements Layer {
               UnitType.Farmland,
               "farmland",
               this.keybinds["buildFarmland"]?.key ?? "F",
+            )}
+            ${this.renderUnitItem(
+              bunkerIcon,
+              this._bunker,
+              UnitType.Bunker,
+              "bunker",
+              this.keybinds["buildBunker"]?.key ?? "B",
             )}
           </div>
         </div>

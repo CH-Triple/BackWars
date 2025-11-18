@@ -84,6 +84,7 @@ export class StructureIconsLayer implements Layer {
     [UnitType.MissileSilo, { visible: true }],
     [UnitType.SAMLauncher, { visible: true }],
     [UnitType.Farmland, { visible: true }],
+    [UnitType.Bunker, { visible: true }],
   ]);
   private lastGhostQueryAt: number;
   potentialUpgrade: StructureRenderInfo | undefined;

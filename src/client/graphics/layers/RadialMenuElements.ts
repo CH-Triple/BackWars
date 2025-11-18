@@ -332,6 +332,7 @@ function getAllEnabledUnits(myPlayer: boolean, config: Config): Set<UnitType> {
     addStructureIfEnabled(UnitType.SAMLauncher);
     addStructureIfEnabled(UnitType.Factory);
     addStructureIfEnabled(UnitType.Farmland);
+    addStructureIfEnabled(UnitType.Bunker)
   } else {
     addStructureIfEnabled(UnitType.Warship);
     addStructureIfEnabled(UnitType.HydrogenBomb);

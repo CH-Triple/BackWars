@@ -18,6 +18,7 @@ import { NukeExecution } from "./NukeExecution";
 import { PortExecution } from "./PortExecution";
 import { SAMLauncherExecution } from "./SAMLauncherExecution";
 import { WarshipExecution } from "./WarshipExecution";
+import { BunkerExecution } from "./BunkerExecution";
 
 export class ConstructionExecution implements Execution {
   private construction: Unit | null = null;
@@ -136,6 +137,9 @@ export class ConstructionExecution implements Execution {
         break;
       case UnitType.Farmland:
         this.mg.addExecution(new FarmlandExecution(player, this.tile));
+        break;
+      case UnitType.Bunker:
+        this.mg.addExecution(new BunkerExecution(player, this.tile));
         break;
       default:
         console.warn(
