@@ -38,7 +38,7 @@ async function setupTunnels() {
   );
 
   // === CUSTOM HOST/IP + PORT ===
-  const host = "localhost";
+  const host = "100.118.122.79";
   const port = 0; // Standard HTTP Port
 
   const domainToService = new Map<string, string>().set(

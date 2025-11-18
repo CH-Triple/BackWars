@@ -283,7 +283,7 @@ export class UserSettingModal extends LitElement {
             <div
               style="padding: 1rem; margin-bottom: 1rem; border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; font-weight: bold;"
             >
-              ${isVip ? "VIP: ON" : ""} ${isAdmin ? "ADMIN: ON" : ""}
+              ${isVip ? "VIP: ON" : ""} | ${isAdmin ? "ADMIN: ON" : ""}
             </div>
           `
         : null}
