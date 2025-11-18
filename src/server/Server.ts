@@ -13,7 +13,9 @@ dotenv.config();
 // Main entry point of the application
 async function main() {
   if (cluster.isPrimary) {
-    if (config.env() !== GameEnv.Dev) {
+    // Only setup tunnels if not on Render (Render handles routing)
+    // Check for RENDER environment variable which Render sets
+    if (config.env() !== GameEnv.Dev && !process.env.RENDER) {
       await setupTunnels();
     }
     console.log("Starting master process on standard HTTP/HTTPS port...");

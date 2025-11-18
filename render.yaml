@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: backwars-server
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: GAME_ENV
+        value: prod
+      - key: NODE_ENV
+        value: production
+    # Render automatically sets PORT environment variable
+    # Add your other environment variables in the Render dashboard:
+    # - ADMIN_TOKEN
+    # - API_KEY
+    # - etc.
+
