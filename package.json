@@ -2,7 +2,7 @@
   "name": "openfront-client",
   "scripts": {
     "build": "npm run build-prod",
-    "build-dev": "webpack --config webpack.config.js --mode development",
+    "build-dev": "npx webpack --config webpack.config.js --mode development",
     "build-prod": "webpack --config webpack.config.js --mode production",
     "start": "npm run start:server",
     "start:client": "webpack serve --open --node-env development",
