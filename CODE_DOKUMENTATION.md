@@ -23,7 +23,7 @@ BackWars ist ein Multiplayer-Strategiespiel mit einer Client-Server-Architektur:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    CLIENT (Browser)                          │
+│                    CLIENT (Browser)                         │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │  UI Layer (Lit Elements, HTML/CSS)                   │   │
 │  │  - Modals, Buttons, Menüs                            │   │
@@ -45,7 +45,7 @@ BackWars ist ein Multiplayer-Strategiespiel mit einer Client-Server-Architektur:
 ┌─────────────────────────────────────────────────────────────┐
 │                    SERVER (Node.js)                         │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │  Master Process                                       │   │
+│  │  Master Process                                      │   │
 │  │  - Lobby Management, Load Balancing                  │   │
 │  └──────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────┐   │
@@ -2817,7 +2817,3 @@ export interface PlayerActions {
 
 - Begrenzte Requests pro Sekunde
 - Verhindert Missbrauch
-
----
-
-**Ende der Dokumentation**
