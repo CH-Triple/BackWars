@@ -10,6 +10,10 @@ services:
         value: prod
       - key: NODE_ENV
         value: production
+      - key: NUM_WORKERS
+        value: "2"
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=1024"
     # Render automatically sets PORT environment variable
     # Add your other environment variables in the Render dashboard:
     # - ADMIN_TOKEN
