@@ -57,7 +57,7 @@ export class StructureLayer implements Layer {
       territoryRadius: BASE_TERRITORY_RADIUS * RADIUS_SCALE_FACTOR,
     },
     [UnitType.Farmland]: {
-      icon: factoryIcon,
+      icon: farmlandIcon,
       borderRadius: BASE_BORDER_RADIUS * RADIUS_SCALE_FACTOR,
       territoryRadius: BASE_TERRITORY_RADIUS * RADIUS_SCALE_FACTOR,
     },
