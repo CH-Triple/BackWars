@@ -158,7 +158,7 @@
     "success": "Successfully logged in as {email}!"
   },
   "account_modal": {
-    "title": "Account",
+    "title": "Account Login",
     "logged_in_as": "Logged in as {email}",
     "fetching_account": "Fetching account information...",
     "logged_in_with_discord": "Logged in with Discord",

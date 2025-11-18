@@ -20,6 +20,29 @@ import {
 } from "./jwt";
 import { isInIframe, translateText } from "./Utils";
 
+type Account = {
+  mail: string;
+  password: string;
+  vip_rank: boolean;
+  admin: boolean;
+};
+
+const accounts: Account[] = [
+  {
+    mail: "chtriple.work@gmail.com",
+    password: "roota1",
+    vip_rank: true,
+    admin: true,
+  },
+  {
+    mail: "leonard@mail.com",
+    password: "lubru123",
+    vip_rank: true,
+    admin: true,
+  }
+];
+
+
 @customElement("account-modal")
 export class AccountModal extends LitElement {
   @query("o-modal") private modalEl!: HTMLElement & {
@@ -28,6 +51,7 @@ export class AccountModal extends LitElement {
   };
 
   @state() private email: string = "";
+  @state() private password: string = "";
   @state() private isLoadingUser: boolean = false;
 
   private loggedInEmail: string | null = null;
@@ -39,6 +63,12 @@ export class AccountModal extends LitElement {
 
   constructor() {
     super();
+
+    // Load saved login from localStorage
+    const savedEmail = localStorage.getItem("loggedInEmail");
+    if (savedEmail) {
+      this.loggedInEmail = savedEmail;
+    }
 
     document.addEventListener("userMeResponse", (event: Event) => {
       const customEvent = event as CustomEvent;
@@ -83,13 +113,19 @@ export class AccountModal extends LitElement {
         </div>
       `;
     }
-    if (this.loggedInDiscord) {
+
+    // Prüfe direkt localStorage
+    const savedEmail = localStorage.getItem("loggedInEmail");
+    const isLoggedInDiscord = !!this.loggedInDiscord;
+
+    if (isLoggedInDiscord) {
       return this.renderLoggedInDiscord();
-    } else if (this.loggedInEmail) {
+    } else if (savedEmail) {
+      this.loggedInEmail = savedEmail; // optional: um die UI zu aktualisieren
       return this.renderLoggedInEmail();
-    } else {
-      return this.renderLoginOptions();
     }
+
+    return this.renderLoginOptions();
   }
 
   private viewGame(gameId: string): void {
@@ -132,12 +168,16 @@ export class AccountModal extends LitElement {
   private renderLoggedInEmail(): TemplateResult {
     return html`
       <div class="p-6">
-        <div class="mb-4">
-          <p class="text-white text-center mb-4">
-            Logged in as ${this.loggedInEmail}
-          </p>
-        </div>
-        ${this.logoutButton()}
+        <p class="text-white text-center mb-4">
+          Logged in as <b>${this.loggedInEmail}</b>
+        </p>
+
+        <button
+          @click="${this.handleLogout}"
+          class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+        >
+          Log Out
+        </button>
       </div>
     `;
   }
@@ -157,11 +197,12 @@ export class AccountModal extends LitElement {
     return html`
       <div class="p-6">
         <div class="mb-6">
+          <!--
           <h3 class="text-lg font-medium text-white mb-4 text-center">
             Choose your login method
           </h3>
 
-          <!-- Discord Login Button -->
+           Discord Login Button 
           <div class="mb-6">
             <button
               @click="${this.handleDiscordLogin}"
@@ -179,7 +220,7 @@ export class AccountModal extends LitElement {
             </button>
           </div>
 
-          <!-- Divider -->
+          <!-- Divider
           <div class="relative mb-6">
             <div class="absolute inset-0 flex items-center">
               <div class="w-full border-t border-gray-300"></div>
@@ -188,7 +229,7 @@ export class AccountModal extends LitElement {
               <span class="px-2 bg-gray-800 text-gray-300">or</span>
             </div>
           </div>
-
+          -->
           <!-- Email Recovery -->
           <div class="mb-4">
             <label
@@ -208,15 +249,35 @@ export class AccountModal extends LitElement {
               required
             />
           </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-sm font-medium text-white mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              .value="${this.password}"
+              @input="${this.handlePasswordInput}"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
         </div>
 
         <div class="flex justify-end space-x-3">
+          <!--
           <button
             @click="${this.close}"
             class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Cancel
           </button>
+          -->
           <button
             @click="${this.handleSubmit}"
             class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -232,44 +293,48 @@ export class AccountModal extends LitElement {
     const target = e.target as HTMLInputElement;
     this.email = target.value;
   }
+  private handlePasswordInput(e: Event) {
+    const target = e.target as HTMLInputElement;
+    this.password = target.value;
+  }
 
   private async handleSubmit() {
-    if (!this.email) {
+    if (!this.email && !this.password) {
+      alert("Please enter an email address & a password");
+      return;
+    } else if (!this.email) {
       alert("Please enter an email address");
+      return;
+    } else if (!this.password) {
+      alert("Please enter a password");
       return;
     }
 
-    try {
-      const apiBase = getApiBase();
-      const response = await fetch(`${apiBase}/magic-link`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          redirectDomain: window.location.origin,
-          email: this.email,
-        }),
-      });
+    const account = accounts.find((acc: Account) => acc.mail === this.email);
 
-      if (response.ok) {
-        alert(
-          translateText("account_modal.recovery_email_sent", {
-            email: this.email,
-          }),
-        );
-        this.close();
+    if (account && account.password === this.password) {
+      this.loggedInEmail = account.mail;
+      alert(`Success! Welcome ${account.mail}`);
+
+      // Speichere Login im localStorage
+      localStorage.setItem("loggedInEmail", account.mail);
+
+      // Speichere Ranks/Admin
+      if (account.vip_rank) {
+        localStorage.setItem("vip", "true");
       } else {
-        console.error(
-          "Failed to send recovery email:",
-          response.status,
-          response.statusText,
-        );
-        alert("Failed to send recovery email. Please try again.");
+        localStorage.removeItem("vip");
       }
-    } catch (error) {
-      console.error("Error sending recovery email:", error);
-      alert("Error sending recovery email. Please try again.");
+
+      if (account.admin) {
+        localStorage.setItem("admin", "true");
+      } else {
+        localStorage.removeItem("admin");
+      }
+
+      this.close();
+    } else {
+      alert("Wrong Password or Email");
     }
   }
 
@@ -308,11 +373,13 @@ export class AccountModal extends LitElement {
     this.modalEl?.close();
   }
 
-  private async handleLogout() {
-    await logOut();
+  private handleLogout() {
+    localStorage.removeItem("loggedInEmail");
+    localStorage.removeItem("admin");
+    localStorage.removeItem("vip");
+    this.loggedInEmail = null;
+    alert("Logged out!");
     this.close();
-    // Refresh the page after logout to update the UI state
-    window.location.reload();
   }
 
   private async loadFromApi(playerId: string): Promise<void> {
@@ -365,6 +432,11 @@ export class AccountButton extends LitElement {
         this.requestUpdate();
       }
     });
+
+    const savedEmail = localStorage.getItem("loggedInEmail");
+    if (savedEmail) {
+      this.loggedInEmail = savedEmail;
+    }
   }
 
   createRenderRoot() {

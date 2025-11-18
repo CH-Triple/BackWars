@@ -14,3 +14,15 @@ webpack.config.js
 In Defaultconfig.ts (src/core/configuration/DefaultConfig.ts) alle Zahlen für einnahmen usw.
 
 PublicLobby.ts => Special Events - (src/client/PublicLobby.ts)
+
+
+
+
+Um den VIP Status zu bekomme  musst du folgendes schreiben:
+localStorage.getItem("vip");
+Um eine Abfrage zu machen, so:
+if(localStorage.getItem("vip") == "true") {}
+
+VIP im localStorage "vip"
+Mail im localStorage "loggedInEmail"
+Admin im localStorage "admin"
