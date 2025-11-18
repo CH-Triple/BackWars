@@ -197,6 +197,7 @@ export enum UnitType {
   Train = "Train",
   Factory = "Factory",
   Farmland = "Farmland",
+  Bunker = "Bunker",
 }
 
 export enum TrainType {
@@ -213,6 +214,7 @@ const _structureTypes: ReadonlySet<UnitType> = new Set([
   UnitType.Port,
   UnitType.Factory,
   UnitType.Farmland,
+  UnitType.Bunker,
 ]);
 
 export function isStructureType(type: UnitType): boolean {
@@ -267,6 +269,8 @@ export interface UnitParamsMap {
   [UnitType.Factory]: Record<string, never>;
 
   [UnitType.Farmland]: Record<string, never>;
+
+  [UnitType.Bunker]: Record<string, never>;
 
   [UnitType.MissileSilo]: Record<string, never>;
 

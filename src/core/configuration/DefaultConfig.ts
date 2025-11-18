@@ -593,6 +593,15 @@ export class DefaultConfig implements Config {
           maxHealth: 500,
           canBuildTrainStation: true,
         };
+      case UnitType.Bunker:
+        return {
+          cost: this.costWrapper(() => 1_000_000, UnitType.Bunker),
+          territoryBound: true,
+          constructionDuration: this.instantBuild() ? 0 : 2 * 10,
+          upgradable: false,
+          maxHealth: 1000,
+
+        };
       default:
         assertNever(type);
     }

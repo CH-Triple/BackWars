@@ -15,6 +15,8 @@ import { PseudoRandom } from "../PseudoRandom";
 import { NukeType } from "../StatsSchemas";
 
 const SPRITE_RADIUS = 16;
+const BUNKER_PROTECTION_RADIUS = 15;
+const BUNKER_PROTECTION_RADIUS_SQUARED = BUNKER_PROTECTION_RADIUS * BUNKER_PROTECTION_RADIUS;
 
 export class NukeExecution implements Execution {
   private active = true;
@@ -44,6 +46,18 @@ export class NukeExecution implements Execution {
     return this.mg.owner(this.dst);
   }
 
+  private isProtectedByBunker(tile: TileRef): boolean {
+    const bunkers = this.mg.units(UnitType.Bunker);
+    for (const bunker of bunkers) {
+      if (!bunker.isActive()) continue;
+      const distSquared = this.mg.euclideanDistSquared(bunker.tile(), tile);
+      if (distSquared <= BUNKER_PROTECTION_RADIUS_SQUARED) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private tilesToDestroy(): Set<TileRef> {
     if (this.tilesToDestroyCache !== undefined) {
       return this.tilesToDestroyCache;
@@ -55,10 +69,19 @@ export class NukeExecution implements Execution {
     const rand = new PseudoRandom(this.mg.ticks());
     const inner2 = magnitude.inner * magnitude.inner;
     const outer2 = magnitude.outer * magnitude.outer;
-    this.tilesToDestroyCache = this.mg.bfs(this.dst, (_, n: TileRef) => {
+    const allTiles = this.mg.bfs(this.dst, (_, n: TileRef) => {
       const d2 = this.mg?.euclideanDistSquared(this.dst, n) ?? 0;
       return d2 <= outer2 && (d2 <= inner2 || rand.chance(2));
     });
+    
+    // Entferne Tiles, die von Bunkern geschützt sind
+    this.tilesToDestroyCache = new Set<TileRef>();
+    for (const tile of allTiles) {
+      // Prüfe, ob das Tile von einem Bunker geschützt ist
+      if (!this.isProtectedByBunker(tile)) {
+        this.tilesToDestroyCache.add(tile);
+      }
+    }
     return this.tilesToDestroyCache;
   }
 
@@ -292,6 +315,14 @@ export class NukeExecution implements Execution {
         unit.type() !== UnitType.MIRVWarhead &&
         unit.type() !== UnitType.MIRV
       ) {
+        // Bunker selbst können nicht zerstört werden
+        if (unit.type() === UnitType.Bunker) {
+          continue;
+        }
+        // Prüfe, ob die Unit von einem Bunker geschützt ist
+        if (this.isProtectedByBunker(unit.tile())) {
+          continue;
+        }
         if (this.mg.euclideanDistSquared(this.dst, unit.tile()) < outer2) {
           unit.delete(true, this.player);
         }
