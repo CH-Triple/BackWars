@@ -1,8 +1,10 @@
 {
   "name": "openfront-client",
   "scripts": {
+    "build": "npm run build-prod",
     "build-dev": "webpack --config webpack.config.js --mode development",
     "build-prod": "webpack --config webpack.config.js --mode production",
+    "start": "npm run start:server",
     "start:client": "webpack serve --open --node-env development",
     "start:server": "node --loader ts-node/esm --experimental-specifier-resolution=node src/server/Server.ts",
     "start:server-dev": "cross-env GAME_ENV=dev node --loader ts-node/esm --experimental-specifier-resolution=node src/server/Server.ts",
